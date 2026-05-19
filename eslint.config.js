@@ -3,6 +3,9 @@ import js from "@eslint/js";
 export default [
     js.configs.recommended,
     {
+        ignores: ["dist/**", "coverage/**", "node_modules/**", "e2e/**"]
+    },
+    {
         languageOptions: {
             ecmaVersion: "latest",
             sourceType: "module",
@@ -17,7 +20,9 @@ export default [
                 beforeEach: "readonly",
                 __dirname: "readonly",
                 require: "readonly",
-                module: "readonly"
+                module: "readonly",
+                fetch: "readonly",
+                MutationObserver: "readonly"
             }
         },
         rules: {
