@@ -1,5 +1,9 @@
 # Labs IT Project Manage - MVP
 
+[![CI/CD Pipeline](https://github.com/MykolaMelnykSHI/LabsITProjectManage/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/MykolaMelnykSHI/LabsITProjectManage/actions/workflows/ci-cd.yml)
+
+**Production URL (Vercel):** [https://ваш-проєкт.vercel.app](https://ваш-проєкт.vercel.app) *(Замініть на ваше реальне посилання)*
+
 ## Опис ідеї MVP
 Цей проєкт створений у рамках лабораторної роботи з управління ІТ-проєктами. Його мета — продемонструвати базові навички роботи з Git: ініціалізацію проєкту, налаштування стратегії розгалуження (Feature Branch/GitFlow), створення Pull Requests, проведення Code Review та вирішення конфліктів злиття. 
 
