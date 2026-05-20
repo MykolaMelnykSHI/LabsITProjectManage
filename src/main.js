@@ -1,5 +1,19 @@
 // Import CSS so Vite can process it
 import './style.css';
+import posthog from 'posthog-js';
+
+// Ініціалізація PostHog (Крок 1)
+posthog.init('phc_u7MNHDuatKukA76Ccay3xbq4GeJV9aaMdTJ9EKq47ygG', {
+  api_host: 'https://eu.posthog.com',
+  person_profiles: 'identified_only'
+});
+
+// Перевірка Feature Flag (Крок 5)
+posthog.onFeatureFlags(() => {
+  if (posthog.isFeatureEnabled('show-urgent-filter')) {
+    document.getElementById('urgent-btn').style.display = 'inline-block';
+  }
+});
 
 // 1. Виведення змінної оточення
 const envStatusElement = document.getElementById('env-status');
@@ -32,6 +46,11 @@ function renderTasks() {
     deleteBtn.onclick = () => {
       tasks.splice(index, 1);
       saveAndRender();
+      
+      // PostHog event: task deleted (Крок 2)
+      posthog.capture('task_deleted', {
+        reason: 'user_action'
+      });
     };
     
     li.appendChild(deleteBtn);
@@ -50,6 +69,13 @@ addTaskBtn.addEventListener('click', () => {
     tasks.push({ title });
     taskInput.value = '';
     saveAndRender();
+    
+    // PostHog event: task created (Крок 2)
+    posthog.capture('task_created', {
+      priority: 'high',
+      category: 'work',
+      is_authenticated: true
+    });
   }
 });
 
