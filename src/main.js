@@ -1,6 +1,7 @@
 // Import CSS so Vite can process it
 import './style.css';
 import posthog from 'posthog-js';
+import * as Sentry from '@sentry/browser';
 
 // Ініціалізація PostHog (Крок 1)
 posthog.init('phc_u7MNHDuatKukA76Ccay3xbq4GeJV9aaMdTJ9EKq47ygG', {
@@ -81,3 +82,30 @@ addTaskBtn.addEventListener('click', () => {
 
 // Ініціалізація
 renderTasks();
+
+// Ініціалізація Sentry (Крок 1 та Крок 4)
+
+Sentry.init({
+  dsn: "https://abbe19a7d86637e96852fa4da9e232bf@o4511416598790145.ingest.de.sentry.io/4511421903470672",
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration(),
+  ],
+  tracesSampleRate: 1.0, // Для моніторингу продуктивності (Крок 4)
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+  environment: "development",
+});
+
+// Налаштування контексту користувача (Крок 3)
+Sentry.setUser({
+  id: "55",
+  email: "student@example.com",
+  segment: "premium_user"
+});
+
+// Кнопка генерації помилок (Крок 2)
+const breakWorldBtn = document.getElementById('break-world-btn');
+breakWorldBtn.addEventListener('click', () => {
+  throw new Error("Sentry Test Error: Something went wrong in UniDone!");
+});
